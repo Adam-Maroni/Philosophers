@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:53:28 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 12:09:34 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:42:56 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 #include "philosopher.h"
 
 /**
- * \fn void ft_philo_eats_or_thinks(t_global *global,
-		t_philo_list **philo)
+ * \fn void ft_philo_eats_or_thinks(t_global *global)
  * \brief This function decide whether a philosopher should eat or think
  * \param global Address of structure containing information 
  * about current philosopher node and time's Constant/variables.
@@ -40,7 +39,7 @@ void	ft_philo_eats_or_thinks(t_global *global)
 	if (ft_are_forks_available(philo->fork, philo->next->fork))
 	{
 		pthread_create(thread, NULL, ft_routine, (void *)global);
-	//	pthread_detach(*thread);
+		pthread_detach(*thread);
 		usleep(10);
 	}
 	else
@@ -57,23 +56,15 @@ void	ft_philo_eats_or_thinks(t_global *global)
  *  \param argv : Table of string in which are stored the input arguments.
  *  \return 1 if they have, 0 if they have not.
  */
-int	ft_have_all_philo_eaten_enough(t_philo_list *philo, char **argv)
+int	ft_have_all_philo_eaten_enough(t_global *global)
 {
-	t_philo_list	*tmp;
 
-	if (!philo || !argv)
+
+	if (!global || !global->number_of_times_each_philosopher_must_eat || !global->nb_philo)
+		return (0);
+	if (global->total_meals >= global->nb_philo * global->number_of_times_each_philosopher_must_eat)
 		return (1);
-	if (!argv[5])
-		return (0);
-	tmp = philo->next;
-	while (tmp != philo)
-		if (tmp->eat_counter < ft_atoi(argv[5]))
-			return (0);
-	else
-		tmp = tmp->next;
-	if (tmp->eat_counter < ft_atoi(argv[5]))
-		return (0);
-	return (1);
+	return (0);
 }
 
 /** 
@@ -85,15 +76,15 @@ int	ft_have_all_philo_eaten_enough(t_philo_list *philo, char **argv)
 void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 {
 	t_global	*global;
-	int			nb_philo;
 	int			i;
 
-	nb_philo = ft_atoi(argv[1]);
 	i = 0;
 	global = ft_init_global(start_time, argv);
-	while (++i <= nb_philo)
+	if (!global)
+		return ;
+	while (++i <= global->nb_philo)
 		ft_lstadd_back(global->philo, ft_new_philo(i));
-	while (!ft_have_all_philo_eaten_enough(*(global->philo), argv))
+	while (!ft_have_all_philo_eaten_enough(global))
 	{
 		/* if (ft_is_too_late(global->philo, global->time_to_die, */
 		/* 		ft_timestamp(global->start_time))) */

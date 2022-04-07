@@ -6,15 +6,15 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:01:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/05 17:48:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:43:57 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_display_message(float timpestamp, int philo_id, int message)
+void	ft_display_message(int timpestamp, int philo_id, int message)
 {
-	printf("%f: %d ", timpestamp, philo_id);
+	printf("%d: %d ", timpestamp, philo_id);
 	if (message == 0)
 		printf("is eating\n");
 	else if (message == 1)

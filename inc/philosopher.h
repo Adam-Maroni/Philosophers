@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 11:47:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/07 15:46:12 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_timeval
  * \var s_philo_list::id 
  * The identifier of our philosopher.
  * \var s_philo_list::time_of_last_meal_in_ms
- * A floating value containing the last 
+ * A inting value containing the last 
  * meal timestamp of this philosopher.
  * \var s_philo_list::thread
  * A pointer containing the address of the 
@@ -63,7 +63,7 @@ typedef struct s_philo_list
 {
 	int					id;
 	int					isavailable;
-	float				time_of_last_meal_in_ms;
+	int				time_of_last_meal_in_ms;
 	pthread_t			*thread;
 	int					eat_counter;
 	struct s_philo_list	*next;
@@ -79,14 +79,16 @@ typedef struct s_global
 {
 	t_timeval		*start_time;
 	t_philo_list	**philo;
-	float			time_to_die;
-	float			time_to_eat;
-	float			time_to_sleep;
-	float			number_of_times_each_philosopher_must_eat;
+	int			nb_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			number_of_times_each_philosopher_must_eat;
+	int			total_meals;
 }	t_global;
 
 /*	timestamp	*/
-float					ft_timestamp(t_timeval *start_time);
+int					ft_timestamp(t_timeval *start_time);
 t_global				*ft_init_global(t_timeval *start_time, char **argv);
 /*	check_args.c	*/
 int						ft_are_args_correct(int argc, char **argv);
@@ -115,17 +117,16 @@ int						ft_are_forks_available(
 							pthread_mutex_t *left_fork);
 /*	death_handler.c	*/
 void					ft_philosopher_died(
-							t_philo_list **philo, float time_stamp);
+							t_philo_list **philo, int time_stamp);
 int						ft_is_too_late(t_philo_list **philo,
-							float time_to_die, float current_time);
+							int time_to_die, int current_time);
 
 /*	philosophers_handler.c	*/
 void					ft_philo_eats_or_thinks(t_global *global);
-int						ft_have_all_philo_eaten_enough(
-							t_philo_list *philo, char **argv);
+int						ft_have_all_philo_eaten_enough(t_global *global);
 void					ft_philosopher_handler(
 							t_timeval *start_time, char **argv);
 /*	message.c	*/
-void					ft_display_message(float timpestamp,
+void					ft_display_message(int timpestamp,
 							int philo_id, int message);
 #endif
