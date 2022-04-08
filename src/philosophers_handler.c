@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:53:28 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 15:13:57 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 17:54:13 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,28 @@ void	ft_create_threads(t_global *global, int pair)
 	while (philo != last)
 	{
 		if (pair && philo->id % 2 == 0)
+		{
 			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+			printf("THREAD CREATED :%d\n", philo->id);
+		}
 		else if (!pair && philo->id % 2 == 1)
+		{
 			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+			printf("THREAD CREATED :%d\n", philo->id);
+		}
 		philo = philo->next;
+		*global->philo = philo;
 	}
 	if (pair && philo->id % 2 == 0)
+	{
 		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+			printf("THREAD CREATED :%d\n", philo->id);
+	}
 	else if (!pair && philo->id % 2 == 1)
+	{
 		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+			printf("THREAD CREATED :%d\n", philo->id);
+	}
 }
 
 /** 
@@ -123,7 +136,9 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 		else
 			ft_exit(global);
 	}
+	printf("Create pair thread\n");
 	ft_create_threads(global, 1);
+	printf("Create impair thread\n");
 	ft_create_threads(global, 0);
 	while (1)
 		if (ft_have_all_philo_eaten_enough(global)

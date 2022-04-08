@@ -42,10 +42,10 @@ re: fclean all
 #--------------------TESTING--------------------
 COVERAGE_PATH = ./tests/coverage
 COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
-ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_SLEEP) $(TIME_TO_EAT) 
+ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
 
-NB_PHILOSOPHER = "2"
-TIME_TO_DIE = "410"
+NB_PHILOSOPHER = "4"
+TIME_TO_DIE = "4000" 
 TIME_TO_SLEEP = "200"
 TIME_TO_EAT = "400"
 NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
@@ -53,11 +53,13 @@ NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
 debug: $(NAME)
 	gdb -x tests/gdbscripts/1.gdb --args ./$(NAME) $(ARGS)
 
-mem_check: $(NAME)
-	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+mem_check: 
+	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME)
+	#":valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+	./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
-	./$(NAME) $(ARGS)
+	-./$(NAME) $(ARGS)
 
 code_coverage:
 	@make -s FLAGS+="-fprofile-arcs -ftest-coverage" re
