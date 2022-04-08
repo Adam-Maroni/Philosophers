@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 15:46:12 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 14:35:27 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,11 @@ void					ft_lstclear(t_philo_list **list);
 
 /*	meals_handler.c	*/
 void					*ft_routine(void *global);
-int						ft_are_forks_available(
-							pthread_mutex_t *right_fork,
-							pthread_mutex_t *left_fork);
+
 /*	death_handler.c	*/
 void					ft_philosopher_died(
 							t_philo_list **philo, int time_stamp);
-int						ft_is_too_late(t_philo_list **philo,
-							int time_to_die, int current_time);
+int						ft_is_too_late(t_global *global, int current_time);
 
 /*	philosophers_handler.c	*/
 void					ft_philo_eats_or_thinks(t_global *global);

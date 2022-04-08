@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:53:28 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 15:42:56 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/08 15:13:57 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
 /** \headerfile philosopher.h */
 #include "philosopher.h"
 
+void	ft_exit(t_global *global)
+{
+	if (!global)
+		exit(1);
+	ft_lstclear(global->philo);
+	free(global->philo);
+	free(global);
+	exit(0);
+}
+
 /**
  * \fn void ft_philo_eats_or_thinks(t_global *global)
  * \brief This function decide whether a philosopher should eat or think
@@ -25,7 +35,6 @@
  * about current philosopher node and time's Constant/variables.
  * \param philo Address of pointer of current philosopher.
  * 
- */
 void	ft_philo_eats_or_thinks(t_global *global)
 {
 	t_philo_list	*philo;
@@ -45,6 +54,7 @@ void	ft_philo_eats_or_thinks(t_global *global)
 	else
 		ft_display_message(ft_timestamp(global->start_time), philo->id, 2);
 }
+*/
 
 /** 
  * \fn int	ft_have_all_philo_eaten_enough(t_philo_list *philo, char **argv)
@@ -58,13 +68,35 @@ void	ft_philo_eats_or_thinks(t_global *global)
  */
 int	ft_have_all_philo_eaten_enough(t_global *global)
 {
-
-
-	if (!global || !global->number_of_times_each_philosopher_must_eat || !global->nb_philo)
+	if (!global
+		|| !global->number_of_times_each_philosopher_must_eat
+		|| !global->nb_philo)
 		return (0);
-	if (global->total_meals >= global->nb_philo * global->number_of_times_each_philosopher_must_eat)
+	if (global->total_meals >= global->nb_philo
+		* global->number_of_times_each_philosopher_must_eat)
 		return (1);
 	return (0);
+}
+
+void	ft_create_threads(t_global *global, int pair)
+{
+	t_philo_list	*philo;
+	t_philo_list	*last;
+
+	philo = *global->philo;
+	last = ft_lstlast(*global->philo);
+	while (philo != last)
+	{
+		if (pair && philo->id % 2 == 0)
+			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+		else if (!pair && philo->id % 2 == 1)
+			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+		philo = philo->next;
+	}
+	if (pair && philo->id % 2 == 0)
+		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
+	else if (!pair && philo->id % 2 == 1)
+		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
 }
 
 /** 
@@ -75,24 +107,27 @@ int	ft_have_all_philo_eaten_enough(t_global *global)
  */
 void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 {
-	t_global	*global;
-	int			i;
+	t_global		*global;
+	int				i;
+	t_philo_list	*philo;
 
 	i = 0;
 	global = ft_init_global(start_time, argv);
 	if (!global)
 		return ;
 	while (++i <= global->nb_philo)
-		ft_lstadd_back(global->philo, ft_new_philo(i));
-	while (!ft_have_all_philo_eaten_enough(global))
 	{
-		/* if (ft_is_too_late(global->philo, global->time_to_die, */
-		/* 		ft_timestamp(global->start_time))) */
-		/* 	break ; */
-		ft_philo_eats_or_thinks(global);
-		*(global->philo) = (*global->philo)->next;
+		philo = ft_new_philo(i);
+		if (philo)
+			ft_lstadd_back(global->philo, philo);
+		else
+			ft_exit(global);
 	}
-	ft_lstclear(global->philo);
-	free(global->philo);
-	free(global);
+	ft_create_threads(global, 1);
+	ft_create_threads(global, 0);
+	while (1)
+		if (ft_have_all_philo_eaten_enough(global)
+			|| ft_is_too_late(global, ft_timestamp(global->start_time)))
+			break ;
+	ft_exit(global);
 }
