@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 13:29:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 14:27:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/09 15:52:31 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@
 /** \headerfile philosopher.h */
 #include "philosopher.h"
 
-int	ft_is_too_late(t_global *global, int current_time)
+int ft_is_alive(t_global *global, t_philo_list *philo)
+{
+	if (ft_timestamp(global->start_time) - philo->time_of_last_meal_in_ms
+			< global->time_to_die)
+		return (1);
+	return (0);
+}
+
+int	ft_is_too_late(t_global *global)
 {
 	t_philo_list	*philo;
 	t_philo_list	*philo_next;
@@ -29,16 +37,14 @@ int	ft_is_too_late(t_global *global, int current_time)
 	philo_next = philo->next;
 	while (philo_next != philo)
 	{
-		if (current_time - philo_next->time_of_last_meal_in_ms
-			< global->time_to_die)
+		if (ft_is_alive(global, philo_next))
 			return (0);
 		else
 			break ;
 		philo_next = philo_next->next;
 	}
-	if (current_time - philo_next->time_of_last_meal_in_ms
-		< global->time_to_die)
+	if (ft_is_alive(global, philo_next))
 		return (0);
-	printf("%dms %d died\n", current_time, philo_next->id);
+	ft_display_message(ft_timestamp(global->start_time),philo_next->id, 3);
 	return (1);
 }

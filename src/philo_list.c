@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:54:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 11:08:56 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/09 16:13:30 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,15 @@ void	ft_destroy_philo(t_philo_list *addr_philo)
 {
 	if (!addr_philo)
 		return ;
+	if ((addr_philo)->thread)
+	{
+		pthread_detach(*(addr_philo)->thread);
+		free((addr_philo)->thread);
+	}
 	if ((addr_philo)->fork)
 		free(addr_philo->fork);
-	if ((addr_philo)->thread)
-		free((addr_philo)->thread);
 	(addr_philo)->thread = NULL;
+	(addr_philo)->fork = NULL;
 	(addr_philo)->id = 0;
 	(addr_philo)->next->previous = addr_philo->previous;
 	(addr_philo)->previous->next = addr_philo->next;

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:53:28 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 17:54:13 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/09 15:50:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,38 +78,17 @@ int	ft_have_all_philo_eaten_enough(t_global *global)
 	return (0);
 }
 
-void	ft_create_threads(t_global *global, int pair)
+void	ft_create_threads(t_global *global)
 {
-	t_philo_list	*philo;
 	t_philo_list	*last;
 
-	philo = *global->philo;
 	last = ft_lstlast(*global->philo);
-	while (philo != last)
+	while (*global->philo != last)
 	{
-		if (pair && philo->id % 2 == 0)
-		{
-			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
-			printf("THREAD CREATED :%d\n", philo->id);
-		}
-		else if (!pair && philo->id % 2 == 1)
-		{
-			pthread_create(philo->thread, NULL, ft_routine, (void *)global);
-			printf("THREAD CREATED :%d\n", philo->id);
-		}
-		philo = philo->next;
-		*global->philo = philo;
+		pthread_create((*global->philo)->thread, NULL, ft_routine, (void *)global);
+		*global->philo = (*global->philo)->next;
 	}
-	if (pair && philo->id % 2 == 0)
-	{
-		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
-			printf("THREAD CREATED :%d\n", philo->id);
-	}
-	else if (!pair && philo->id % 2 == 1)
-	{
-		pthread_create(philo->thread, NULL, ft_routine, (void *)global);
-			printf("THREAD CREATED :%d\n", philo->id);
-	}
+	pthread_create((*global->philo)->thread, NULL, ft_routine, (void *)global);
 }
 
 /** 
@@ -136,13 +115,9 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 		else
 			ft_exit(global);
 	}
-	printf("Create pair thread\n");
-	ft_create_threads(global, 1);
-	printf("Create impair thread\n");
-	ft_create_threads(global, 0);
+	ft_create_threads(global);
 	while (1)
-		if (ft_have_all_philo_eaten_enough(global)
-			|| ft_is_too_late(global, ft_timestamp(global->start_time)))
+		if (ft_have_all_philo_eaten_enough(global) || ft_is_too_late(global))
 			break ;
 	ft_exit(global);
 }

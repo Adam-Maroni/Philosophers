@@ -12,7 +12,8 @@ SRC = $(addprefix $(SRC_PATH)/, \
 	src/philo_list.c \
 	src/timestamp.c \
 	src/philosophers_handler.c \
-	src/meals_handler.c \
+	src/routine.c \
+	src/routine2.c \
 	src/death_handler.c \
 	src/message.c \
 	src/main.c \
@@ -44,10 +45,10 @@ COVERAGE_PATH = ./tests/coverage
 COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
 ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
 
-NB_PHILOSOPHER = "4"
-TIME_TO_DIE = "4000" 
+NB_PHILOSOPHER = "2"
+TIME_TO_DIE = "410" 
 TIME_TO_SLEEP = "200"
-TIME_TO_EAT = "400"
+TIME_TO_EAT = "200"
 NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
 
 debug: $(NAME)

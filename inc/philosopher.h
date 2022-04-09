@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/08 14:35:27 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/09 15:49:01 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,21 @@ t_philo_list			*ft_lstlast(t_philo_list *list);
 void					ft_lstadd_back(t_philo_list **alst, t_philo_list *new);
 void					ft_lstclear(t_philo_list **list);
 
-/*	meals_handler.c	*/
+/*	routine.c	*/
 void					*ft_routine(void *global);
 
+/*	routine2.c	*/
+void	ft_take_forks(t_global *global,
+		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
+void	ft_clean_forks(pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
+void	ft_eat(t_global *global);
+void	ft_sleep(t_global *global);
+void	ft_think(t_global *global);
+
+
 /*	death_handler.c	*/
-void					ft_philosopher_died(
-							t_philo_list **philo, int time_stamp);
-int						ft_is_too_late(t_global *global, int current_time);
+int						ft_is_too_late(t_global *global);
+int					ft_is_alive(t_global *global, t_philo_list *philo);
 
 /*	philosophers_handler.c	*/
 void					ft_philo_eats_or_thinks(t_global *global);
