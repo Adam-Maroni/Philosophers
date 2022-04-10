@@ -6,18 +6,24 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:01:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/09 18:50:20 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 16:15:31 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_display_message(pthread_mutex_t *mutex_message, int timpestamp, int philo_id, int message)
+/**
+ * \fn void	ft_display_message(pthread_mutex_t *mutex_message,
+	int timpestamp, int philo_id, int message)
+ * \brief This function will decice which message we would display.
+*/
+void	ft_display_message(pthread_mutex_t *mutex_message,
+			int timpestamp, int philo_id, int message)
 {
 	if (pthread_mutex_lock(mutex_message))
 	{
 		printf("Couldn't lock mutex message, thread: %d\n", philo_id);
-		return ;	
+		return ;
 	}
 	printf("%d: %d ", timpestamp, philo_id);
 	if (message == 0)

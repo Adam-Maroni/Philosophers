@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 12:06:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/02/14 18:18:45 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 16:10:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 /** \headerfile philosopher.h */
 #include "philosopher.h"
 
+/**
+ * \fn int	ft_are_args_correct(int argc, char **argv)
+ * \brief This function ensure that the arguments 
+ * pass as input inside program are valid.
+ */
 int	ft_are_args_correct(int argc, char **argv)
 {
 	int	i;

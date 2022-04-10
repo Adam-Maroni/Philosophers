@@ -7,17 +7,19 @@ SRC_PATH = src
 LIBRARIES = -pthread
 SRC = $(addprefix $(SRC_PATH)/, \
 	src/check_args.c \
+	src/global.c \
 	src/libft_utils2.c \
 	src/libft_utils.c \
-	src/philo_list.c \
-	src/timestamp.c \
-	src/philosophers_handler.c \
-	src/routine.c \
-	src/routine2.c \
-	src/death_handler.c \
-	src/message.c \
 	src/main.c \
-      )
+	src/message.c \
+	src/philo_list2.c \
+	src/philo_list.c \
+	src/quit.c \
+	src/routine2.c \
+	src/routine.c \
+	src/threads.c \
+	src/timestamp.c \
+)
 OBJ_PATH = obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
 
@@ -43,20 +45,20 @@ re: fclean all
 #--------------------TESTING--------------------
 COVERAGE_PATH = ./tests/coverage
 COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
-ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
+ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP) $(NB_OF_TIME_EACH_PHILO_MUST_EAT)
 
 NB_PHILOSOPHER = "2"
-TIME_TO_DIE = "500" 
+TIME_TO_DIE = "10000" 
 TIME_TO_EAT = "200"
 TIME_TO_SLEEP = "200"
-NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
+NB_OF_TIME_EACH_PHILO_MUST_EAT = "2"
 
 debug: $(NAME)
 	gdb -x 1.gdb --args ./$(NAME) $(ARGS)
 
 mem_check: re
-#	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
-	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
+#	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)

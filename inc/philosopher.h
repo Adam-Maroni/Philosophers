@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 15:04:14 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:49:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_timeval
 typedef struct s_philo_list
 {
 	int					id;
-	int				time_of_last_meal_in_ms;
+	int					time_of_last_meal_in_ms;
 	int					eat_counter;
 	struct s_philo_list	*next;
 	struct s_philo_list	*previous;
@@ -78,18 +78,21 @@ typedef struct s_global
 {
 	t_timeval		*start_time;
 	t_philo_list	**philo;
-	int			nb_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			number_of_times_each_philosopher_must_eat;
-	int			total_meals;
-	pthread_mutex_t		*mutex_message;
+	int				nb_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_of_times_each_philosopher_must_eat;
+	int				total_meals;
+	pthread_mutex_t	*mutex_message;
 }	t_global;
 
 /*	timestamp	*/
-int					ft_timestamp(t_timeval *start_time);
+int						ft_timestamp(t_timeval *start_time);
+
+/*	global.c	*/
 t_global				*ft_init_global(t_timeval *start_time, char **argv);
+
 /*	check_args.c	*/
 int						ft_are_args_correct(int argc, char **argv);
 
@@ -110,34 +113,43 @@ t_philo_list			*ft_lstlast(t_philo_list *list);
 void					ft_lstadd_back(t_philo_list **alst, t_philo_list *new);
 void					ft_lstclear(t_philo_list **list);
 
+/*	philo_list2	*/
+t_philo_list			**ft_lstinit(t_global *global);
+
 /*	routine.c	*/
 void					*ft_routine(void *global);
 
 /*	routine2.c	*/
-int	ft_take_forks(t_global *global,
-		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork, t_philo_list *philo);
-void	ft_clean_forks(pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
-void	ft_eat(t_global *global, t_philo_list *philo);
-void	ft_sleep(t_global *global, t_philo_list *philo);
-void	ft_think(t_global *global, t_philo_list *philo);
-
-
-/*	death_handler.c	*/
-int						ft_is_too_late(t_global *global);
-int					ft_is_alive(t_global *global, t_philo_list *philo);
+int						ft_take_forks(t_global *global,
+							pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork,
+							t_philo_list *philo);
+void					ft_clean_forks(pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork);
+void					ft_eat(t_global *global, t_philo_list *philo);
+void					ft_sleep(t_global *global, t_philo_list *philo);
+void					ft_think(t_global *global, t_philo_list *philo);
 
 /*	philosophers_handler.c	*/
 void					ft_philo_eats_or_thinks(t_global *global);
 int						ft_have_all_philo_eaten_enough(t_global *global);
+/*	message.c	*/
+void					ft_display_message(pthread_mutex_t *mutex_message,
+							int timpestamp,
+							int philo_id, int message);
+/*  main.c	*/
 void					ft_philosopher_handler(
 							t_timeval *start_time, char **argv);
-/*	message.c	*/
-void					ft_display_message(pthread_mutex_t *mutex_message, int timpestamp,
-							int philo_id, int message);
+
+/*	quit.c	*/
+int						ft_is_too_late(t_global *global);
+int						ft_is_alive(t_global *global, t_philo_list *philo);
+int						ft_have_all_philo_eaten_enough(t_global *global);
+void					ft_exit(t_global *global, pthread_t **thread_array);
+
+/*	thread_array.c	*/
+pthread_t	**ft_init_thread_array(int nb);
+void	ft_create_threads(t_global *global, pthread_t **thread_array);
+void	ft_destroy_thread_array(pthread_t **thread_array);
+
 #endif
-
-
-
-
-
-

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 09:19:07 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 15:06:50 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:14:35 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*ft_routine(void *global)
 	{
 		if (!ft_take_forks(cast, philo->fork, philo->next->fork, philo))
 		{
-			printf("THREAD %d is waiting\n",philo->id);
+			printf("THREAD %d is waiting\n", philo->id);
 			continue ;
 		}
 		ft_eat(cast, philo);
