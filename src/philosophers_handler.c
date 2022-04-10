@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 10:53:28 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/09 15:50:03 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 12:14:40 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,24 @@
 /** \headerfile philosopher.h */
 #include "philosopher.h"
 
-void	ft_exit(t_global *global)
+void	ft_exit(t_global *global, pthread_t **thread_array)
 {
+	int i;
+
+	i = 0;
 	if (!global)
 		exit(1);
+	while (thread_array && thread_array[i])
+	{
+		free(thread_array[i]);
+		i++;
+	}
+	if (thread_array)
+		free(thread_array);
 	ft_lstclear(global->philo);
 	free(global->philo);
+	pthread_mutex_destroy(global->mutex_message);
+	free(global->mutex_message);
 	free(global);
 	exit(0);
 }
@@ -78,17 +90,66 @@ int	ft_have_all_philo_eaten_enough(t_global *global)
 	return (0);
 }
 
-void	ft_create_threads(t_global *global)
+void	ft_create_threads(t_global *global, pthread_t **thread_array)
 {
-	t_philo_list	*last;
+	t_philo_list	*current_philo;
+	int i;
 
-	last = ft_lstlast(*global->philo);
-	while (*global->philo != last)
+	current_philo = *global->philo;
+	i = 0;
+	while (i < global->nb_philo)
 	{
-		pthread_create((*global->philo)->thread, NULL, ft_routine, (void *)global);
-		*global->philo = (*global->philo)->next;
+		if (pthread_create(thread_array[i], NULL, ft_routine, (void *)global) != 0)
+			printf("Something went wrong with thread %d\n", (current_philo)->id);
+		else
+		{
+			current_philo = current_philo->next;
+			*global->philo = current_philo;
+		}
+		i++;
 	}
-	pthread_create((*global->philo)->thread, NULL, ft_routine, (void *)global);
+}
+
+t_philo_list	**ft_lstinit(t_global *global)
+{
+	int	i;
+	t_philo_list	*philo;
+	t_philo_list	**rt;
+
+	i = 0;
+	philo = NULL;
+	rt = NULL;
+	if (!global)
+		ft_exit(global, NULL);
+	rt = (t_philo_list **)ft_calloc(1, sizeof(t_philo_list *));
+	if (!rt)
+		ft_exit(global, NULL);
+	while (++i <= global->nb_philo)
+	{
+		philo = ft_new_philo(i);
+		if (philo)
+			ft_lstadd_back(rt, philo);
+		else
+			ft_exit(global, NULL);
+	}
+	return (rt);
+}
+
+pthread_t	**ft_init_thread_array(int nb)
+{
+	int	i;
+	pthread_t **thread_array;
+
+	if (nb <= 0)
+		return (NULL);
+	i = 0;
+	thread_array = (pthread_t **)ft_calloc(nb + 1, sizeof(pthread_t *));
+	while (i < nb)
+	{
+		thread_array[i] = (pthread_t *)ft_calloc(1, sizeof(pthread_t));
+		i++;
+	}
+	return (thread_array);
 }
 
 /** 
@@ -100,24 +161,17 @@ void	ft_create_threads(t_global *global)
 void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 {
 	t_global		*global;
-	int				i;
-	t_philo_list	*philo;
+	pthread_t		**thread_array;
 
-	i = 0;
 	global = ft_init_global(start_time, argv);
-	if (!global)
-		return ;
-	while (++i <= global->nb_philo)
-	{
-		philo = ft_new_philo(i);
-		if (philo)
-			ft_lstadd_back(global->philo, philo);
-		else
-			ft_exit(global);
-	}
-	ft_create_threads(global);
+	global->philo = ft_lstinit(global);
+	global->mutex_message = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
+	pthread_mutex_init(global->mutex_message, NULL);
+	thread_array = ft_init_thread_array(global->nb_philo);
+	ft_create_threads(global, thread_array);
 	while (1)
 		if (ft_have_all_philo_eaten_enough(global) || ft_is_too_late(global))
 			break ;
-	ft_exit(global);
+	ft_exit(global, thread_array);
 }
+

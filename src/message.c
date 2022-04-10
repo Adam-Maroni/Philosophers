@@ -6,14 +6,19 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:01:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 15:43:57 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/09 18:50:20 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_display_message(int timpestamp, int philo_id, int message)
+void	ft_display_message(pthread_mutex_t *mutex_message, int timpestamp, int philo_id, int message)
 {
+	if (pthread_mutex_lock(mutex_message))
+	{
+		printf("Couldn't lock mutex message, thread: %d\n", philo_id);
+		return ;	
+	}
 	printf("%d: %d ", timpestamp, philo_id);
 	if (message == 0)
 		printf("is eating\n");
@@ -25,6 +30,6 @@ void	ft_display_message(int timpestamp, int philo_id, int message)
 		printf("has died\n");
 	else if (message == 4)
 		printf("has taken a fork\n");
-	else
-		return ;
+	if (pthread_mutex_unlock(mutex_message))
+		printf("Couldn't unlock mutex message, thread: %d\n", philo_id);
 }

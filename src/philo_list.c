@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:54:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/09 16:13:30 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 11:41:41 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,14 @@ t_philo_list	*ft_new_philo(int id)
 	t_philo_list	*rt;
 
 	rt = (t_philo_list *)ft_calloc(1, sizeof(t_philo_list));
-	rt->thread = (pthread_t *)ft_calloc(1, sizeof(pthread_t));
 	rt->fork = (pthread_mutex_t *)ft_calloc(1, sizeof(pthread_mutex_t));
-	if (!rt || !rt->thread || ! rt->fork)
+	if (!rt || ! rt->fork)
 	{
 		ft_destroy_philo(rt);
 		return (NULL);
 	}
 	pthread_mutex_init(rt->fork, NULL);
 	rt->id = id;
-	rt->isavailable = 1;
 	rt->next = rt;
 	rt->previous = rt;
 	rt->time_of_last_meal_in_ms = 0;
@@ -56,14 +54,8 @@ void	ft_destroy_philo(t_philo_list *addr_philo)
 {
 	if (!addr_philo)
 		return ;
-	if ((addr_philo)->thread)
-	{
-		pthread_detach(*(addr_philo)->thread);
-		free((addr_philo)->thread);
-	}
 	if ((addr_philo)->fork)
 		free(addr_philo->fork);
-	(addr_philo)->thread = NULL;
 	(addr_philo)->fork = NULL;
 	(addr_philo)->id = 0;
 	(addr_philo)->next->previous = addr_philo->previous;

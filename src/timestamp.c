@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 14:23:49 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/07 15:38:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 11:16:29 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_global	*ft_init_global(
 	if (!rt)
 		return (NULL);
 	rt->start_time = start_time;
-	rt->philo = (t_philo_list **)ft_calloc(1, sizeof(t_philo_list *));
 	rt->nb_philo = ft_atoi(argv[1]);
 	rt->time_to_die = (int)ft_atoi(argv[2]);
 	rt->time_to_eat = (int)ft_atoi(argv[3]);

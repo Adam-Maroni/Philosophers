@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/09 15:49:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 11:41:01 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define PHILOSOPHER_H
 # include <stdlib.h>
 # include <stdio.h>
+# include <string.h>
 # include <pthread.h>
 # include <unistd.h>
 # include <sys/time.h>
@@ -62,9 +63,7 @@ typedef struct s_timeval
 typedef struct s_philo_list
 {
 	int					id;
-	int					isavailable;
 	int				time_of_last_meal_in_ms;
-	pthread_t			*thread;
 	int					eat_counter;
 	struct s_philo_list	*next;
 	struct s_philo_list	*previous;
@@ -85,6 +84,7 @@ typedef struct s_global
 	int			time_to_sleep;
 	int			number_of_times_each_philosopher_must_eat;
 	int			total_meals;
+	pthread_mutex_t		*mutex_message;
 }	t_global;
 
 /*	timestamp	*/
@@ -114,7 +114,7 @@ void					ft_lstclear(t_philo_list **list);
 void					*ft_routine(void *global);
 
 /*	routine2.c	*/
-void	ft_take_forks(t_global *global,
+int	ft_take_forks(t_global *global,
 		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
 void	ft_clean_forks(pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
 void	ft_eat(t_global *global);
@@ -132,6 +132,6 @@ int						ft_have_all_philo_eaten_enough(t_global *global);
 void					ft_philosopher_handler(
 							t_timeval *start_time, char **argv);
 /*	message.c	*/
-void					ft_display_message(int timpestamp,
+void					ft_display_message(pthread_mutex_t *mutex_message, int timpestamp,
 							int philo_id, int message);
 #endif

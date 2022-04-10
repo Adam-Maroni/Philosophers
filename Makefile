@@ -46,18 +46,17 @@ COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
 ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP)
 
 NB_PHILOSOPHER = "2"
-TIME_TO_DIE = "410" 
-TIME_TO_SLEEP = "200"
+TIME_TO_DIE = "1000000" 
 TIME_TO_EAT = "200"
+TIME_TO_SLEEP = "200"
 NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
 
 debug: $(NAME)
-	gdb -x tests/gdbscripts/1.gdb --args ./$(NAME) $(ARGS)
+	gdb -x 1.gdb --args ./$(NAME) $(ARGS)
 
-mem_check: 
-	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME)
-	#":valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
-	./$(NAME) $(ARGS)
+mem_check: re
+#	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
+	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)

@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 13:29:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/09 15:52:31 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 11:59:15 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_is_too_late(t_global *global)
 
 	if (!global)
 		return (-1);
-	philo = *global->philo;
+	philo = (*global->philo);
 	philo_next = philo->next;
 	while (philo_next != philo)
 	{
@@ -45,6 +45,6 @@ int	ft_is_too_late(t_global *global)
 	}
 	if (ft_is_alive(global, philo_next))
 		return (0);
-	ft_display_message(ft_timestamp(global->start_time),philo_next->id, 3);
+	ft_display_message(global->mutex_message, ft_timestamp(global->start_time),philo_next->id, 3);
 	return (1);
 }
