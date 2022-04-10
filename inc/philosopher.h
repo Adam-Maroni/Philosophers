@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 11:41:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:04:14 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,11 @@ void					*ft_routine(void *global);
 
 /*	routine2.c	*/
 int	ft_take_forks(t_global *global,
-		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
+		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork, t_philo_list *philo);
 void	ft_clean_forks(pthread_mutex_t *left_fork, pthread_mutex_t *right_fork);
-void	ft_eat(t_global *global);
-void	ft_sleep(t_global *global);
-void	ft_think(t_global *global);
+void	ft_eat(t_global *global, t_philo_list *philo);
+void	ft_sleep(t_global *global, t_philo_list *philo);
+void	ft_think(t_global *global, t_philo_list *philo);
 
 
 /*	death_handler.c	*/
@@ -135,3 +135,9 @@ void					ft_philosopher_handler(
 void					ft_display_message(pthread_mutex_t *mutex_message, int timpestamp,
 							int philo_id, int message);
 #endif
+
+
+
+
+
+
