@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine2.c                                         :+:      :+:    :+:   */
+/*   subrotuines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "philosopher.h"
 
 /**
- * \file routine2.c
+ * \file subrotuines.c
  * \brief This file contains the subroutine that will be used by threads main routine.
  */
 

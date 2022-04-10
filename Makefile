@@ -15,7 +15,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
 	src/philo_list2.c \
 	src/philo_list.c \
 	src/quit.c \
-	src/routine2.c \
+	src/subroutines.c \
 	src/routine.c \
 	src/threads.c \
 	src/timestamp.c \
