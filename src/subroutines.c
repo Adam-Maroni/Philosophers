@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 13:58:38 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 17:41:20 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 17:55:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /**
  * \file subrotuines.c
- * \brief This file contains the subroutine that will be used by threads main routine.
+ * \brief This file contains the subroutine 
+ * that will be used by threads main routine.
  */
 
 /**
@@ -65,6 +66,7 @@ void	ft_eat(t_global *global, t_philo_list *philo)
 		return ;
 	ft_display_message(global->mutex_message,
 		ft_timestamp(global->start_time), philo->id, 0);
+	philo->time_of_last_meal_in_ms = ft_timestamp(global->start_time);
 	philo->eat_counter++;
 	global->total_meals++;
 	usleep(global->time_to_eat * 1000);
