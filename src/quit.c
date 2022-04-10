@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 16:38:13 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/10 17:09:34 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	ft_have_all_philo_eaten_enough(t_global *global)
 		return (0);
 	if (global->total_meals >= global->nb_philo
 		* global->number_of_times_each_philosopher_must_eat)
-	{
-		printf("Philosophers are done eating.\n");
 		return (1);
-	}
 	return (0);
 }
 
@@ -52,10 +49,12 @@ void	ft_exit(t_global *global, pthread_t **thread_array)
 {
 	if (!global)
 		exit(1);
+	pthread_mutex_lock(global->mutex_message);
 	if (thread_array)
 		ft_destroy_thread_array(thread_array);
 	ft_lstclear(global->philo);
 	free(global->philo);
+	pthread_mutex_unlock(global->mutex_message);
 	pthread_mutex_destroy(global->mutex_message);
 	free(global->mutex_message);
 	free(global);
