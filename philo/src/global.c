@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:35:57 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 16:14:07 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/11 17:27:12 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * \fn t_global	*ft_init_global(
 	t_timeval *start_time, char **argv)
- * \brief This function create a global structure which will contains the data we use through our algorithm.
+ * \brief This function create a global structure 
+ * which will contains the data we use through our algorithm.
  * \param time_stamp corresponding to the begining of the simulation.
  */
 t_global	*ft_init_global(

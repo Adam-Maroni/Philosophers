@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 15:49:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/11 17:29:14 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,9 @@ int						ft_have_all_philo_eaten_enough(t_global *global);
 void					ft_exit(t_global *global, pthread_t **thread_array);
 
 /*	thread_array.c	*/
-pthread_t	**ft_init_thread_array(int nb);
-void	ft_create_threads(t_global *global, pthread_t **thread_array);
-void	ft_destroy_thread_array(pthread_t **thread_array);
+pthread_t				**ft_init_thread_array(int nb);
+void					ft_create_threads(t_global *global,
+							pthread_t **thread_array);
+void					ft_destroy_thread_array(pthread_t **thread_array);
 
 #endif
