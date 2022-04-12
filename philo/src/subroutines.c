@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 13:58:38 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 09:14:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 10:06:59 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_take_forks(t_global *global,
 		pthread_mutex_t *left_fork, pthread_mutex_t *right_fork,
 		t_philo_list *philo)
 {
+	if (!left_fork || !right_fork || left_fork == right_fork)
+		return (-1);
 	if (pthread_mutex_lock(left_fork) == 0)
 	{	
 		ft_display_message(global->mutex_message,
