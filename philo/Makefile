@@ -47,18 +47,18 @@ COVERAGE_PATH = ./tests/coverage
 COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
 ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP) $(NB_OF_TIME_EACH_PHILO_MUST_EAT)
 
-NB_PHILOSOPHER = "10"
-TIME_TO_DIE = "10000" 
-TIME_TO_EAT = "200"
+NB_PHILOSOPHER = "4"
+TIME_TO_DIE = "400" 
+TIME_TO_EAT = "100"
 TIME_TO_SLEEP = "200"
-NB_OF_TIME_EACH_PHILO_MUST_EAT = "2"
+NB_OF_TIME_EACH_PHILO_MUST_EAT = "5"
 
 debug: $(NAME)
 	gdb -x 1.gdb --args ./$(NAME) $(ARGS)
 
 mem_check: re
 	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
-#	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+	#valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)

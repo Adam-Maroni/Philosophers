@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:01:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 17:46:40 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 09:46:02 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 void	ft_display_message(pthread_mutex_t *mutex_message,
 			int timpestamp, int philo_id, int message)
 {
-	while (pthread_mutex_lock(mutex_message))
-		;
+	if (!mutex_message)
+		return ;
+	pthread_mutex_lock(mutex_message);
 	printf("%d %d ", timpestamp, philo_id);
 	if (message == 0)
 		printf("is eating\n");

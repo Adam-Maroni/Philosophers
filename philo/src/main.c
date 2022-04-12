@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:05:18 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 15:29:41 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 09:11:23 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 	global->philo = ft_lstinit(global);
 	global->mutex_message = (pthread_mutex_t *)ft_calloc(1,
 			sizeof(pthread_mutex_t));
+	global->mutex_total_meals = (pthread_mutex_t *)ft_calloc(1,
+			sizeof(pthread_mutex_t));
 	pthread_mutex_init(global->mutex_message, NULL);
+	pthread_mutex_init(global->mutex_total_meals, NULL);
 	thread_array = ft_init_thread_array(global->nb_philo);
 	ft_create_threads(global, thread_array);
 	while (1)
