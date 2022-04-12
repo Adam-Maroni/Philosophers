@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 09:10:49 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 16:58:43 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,10 @@ typedef struct s_global
 	int				time_to_sleep;
 	int				number_of_times_each_philosopher_must_eat;
 	int				total_meals;
+	int				end;
 	pthread_mutex_t	*mutex_message;
 	pthread_mutex_t	*mutex_total_meals;
+	pthread_mutex_t	*mutex_end;
 }	t_global;
 
 /*	timestamp	*/

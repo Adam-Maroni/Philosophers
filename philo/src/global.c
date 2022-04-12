@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:35:57 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/11 17:27:12 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 16:59:02 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_global	*ft_init_global(
 	rt->time_to_eat = (int)ft_atoi(argv[3]);
 	rt->time_to_sleep = (int)ft_atoi(argv[4]);
 	rt->total_meals = 0;
+	rt->end = 0;
 	if (argv[5])
 		rt->number_of_times_each_philosopher_must_eat = (int)ft_atoi(argv[5]);
 	else

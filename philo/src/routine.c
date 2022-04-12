@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 09:19:07 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 10:07:58 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/12 17:15:01 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 
 /** \headerfile philosopher.h */
 #include "philosopher.h"
+
+int	ft_thread_should_stop(t_global *global)
+{
+	int	end;
+
+	if (!global)
+		return (-1);
+	if (!global->mutex_end)
+		return (0);
+	pthread_mutex_lock(global->mutex_end);
+	end = global->end;
+	pthread_mutex_unlock(global->mutex_end);
+	return (end);
+}
 
 /**
  * \brief The routine we call through 
@@ -32,9 +46,9 @@ void	*ft_routine(void *global)
 
 	cast = (t_global *)(global);
 	philo = *(cast->philo);
-	while (1)
+	while (ft_thread_should_stop(cast) == 0)
 	{
-		if (ft_take_forks(cast, philo->fork, philo->next->fork, philo) == -1)
+		if (ft_take_forks(cast, philo->fork, philo->next->fork, philo) < 1)
 			continue ;
 		ft_eat(cast, philo);
 		ft_clean_forks(philo->fork, philo->next->fork);
