@@ -20,6 +20,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
 	src/threads.c \
 	src/timestamp.c \
 	src/mutex.c \
+	src/forks.c \
 )
 OBJ_PATH = obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))

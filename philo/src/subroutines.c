@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 13:58:38 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 11:43:16 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 14:25:23 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,10 @@ int	ft_take_forks(t_global *global,
 {
 	if (!left_fork || !right_fork || left_fork == right_fork)
 		return (-1);
-	if (pthread_mutex_lock(left_fork) == 0)
-	{	
-		ft_display_message(global->mutex_message,
-			ft_timestamp(global->start_time),
-			philo->id, 4);
-		if (pthread_mutex_lock(right_fork) == 0)
-		{
-			ft_display_message(global->mutex_message,
-				ft_timestamp(global->start_time), philo->id, 4);
-			return (1);
-		}
-		pthread_mutex_unlock(left_fork);
-	}
-	return (0);
+	if (philo->id % 2 == 0)
+		return (ft_take_forks_right_left(global, left_fork, right_fork, philo));
+	else
+		return (ft_take_forks_left_right(global, left_fork, right_fork, philo));
 }
 
 void	ft_clean_forks(pthread_mutex_t *left_fork, pthread_mutex_t *right_fork)

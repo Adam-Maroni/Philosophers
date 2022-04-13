@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 11:30:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 14:31:50 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,20 @@ pthread_t				**ft_init_thread_array(int nb);
 void					ft_create_threads(t_global *global,
 							pthread_t **thread_array);
 void					ft_destroy_thread_array(pthread_t **thread_array);
-void					ft_wait_for_threads_to_be_done(pthread_t **thread_array);
+void					ft_wait_for_threads_to_be_done(
+							pthread_t **thread_array);
 
 /*	mutex.c		*/
 pthread_mutex_t			*ft_new_mutex(void);
 int						ft_destroy_and_free_mutex(pthread_mutex_t *mutex);
 
+/*	fork.c	*/
+int						ft_take_forks_left_right(t_global *global,
+							pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork,
+							t_philo_list *philo);
+int						ft_take_forks_right_left(t_global *global,
+							pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork,
+							t_philo_list *philo);
 #endif
