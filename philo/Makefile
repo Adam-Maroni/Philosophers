@@ -19,6 +19,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
 	src/routine.c \
 	src/threads.c \
 	src/timestamp.c \
+	src/mutex.c \
 )
 OBJ_PATH = obj
 OBJ = $(addprefix $(OBJ_PATH)/, $(notdir $(SRC:.c=.o)))
@@ -60,7 +61,7 @@ mem_check: re
 	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
 
 valgrind: re
-	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+	valgrind -q --tool=helgrind --log-file=valgrind.log ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)

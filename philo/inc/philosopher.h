@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 16:58:43 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 11:30:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_global
 	pthread_mutex_t	*mutex_message;
 	pthread_mutex_t	*mutex_total_meals;
 	pthread_mutex_t	*mutex_end;
+	pthread_mutex_t	*mutex_create_threads;
 }	t_global;
 
 /*	timestamp	*/
@@ -155,5 +156,10 @@ pthread_t				**ft_init_thread_array(int nb);
 void					ft_create_threads(t_global *global,
 							pthread_t **thread_array);
 void					ft_destroy_thread_array(pthread_t **thread_array);
+void					ft_wait_for_threads_to_be_done(pthread_t **thread_array);
+
+/*	mutex.c		*/
+pthread_mutex_t			*ft_new_mutex(void);
+int						ft_destroy_and_free_mutex(pthread_mutex_t *mutex);
 
 #endif

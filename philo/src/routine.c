@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 09:19:07 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 17:15:01 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 11:50:36 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void	*ft_routine(void *global)
 	t_philo_list	*philo;
 	t_global		*cast;
 
+	pthread_mutex_lock(((t_global *)global)->mutex_create_threads);
 	cast = (t_global *)(global);
 	philo = *(cast->philo);
+	pthread_mutex_unlock(cast->mutex_create_threads);
 	while (ft_thread_should_stop(cast) == 0)
 	{
 		if (ft_take_forks(cast, philo->fork, philo->next->fork, philo) < 1)

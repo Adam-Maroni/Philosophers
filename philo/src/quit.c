@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 17:12:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 11:45:19 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,17 @@ void	ft_exit(t_global *global, pthread_t **thread_array)
 {
 	if (!global)
 		exit(1);
+	ft_destroy_and_free_mutex(global->mutex_create_threads);
 	pthread_mutex_lock(global->mutex_message);
 	pthread_mutex_lock(global->mutex_total_meals);
-	pthread_mutex_destroy(global->mutex_end);
+	ft_destroy_and_free_mutex(global->mutex_end);
 	if (thread_array)
 		ft_destroy_thread_array(thread_array);
 	ft_lstclear(global->philo);
-	free(global->philo);
 	pthread_mutex_unlock(global->mutex_total_meals);
-	pthread_mutex_destroy(global->mutex_total_meals);
+	ft_destroy_and_free_mutex(global->mutex_total_meals);
 	pthread_mutex_unlock(global->mutex_message);
-	pthread_mutex_destroy(global->mutex_message);
-	free(global->mutex_total_meals);
-	free(global->mutex_message);
-	free(global->mutex_end);
-	global->mutex_message = NULL;
-	global->mutex_end = NULL;
+	ft_destroy_and_free_mutex(global->mutex_message);
 	free(global);
 	exit(0);
 }
@@ -84,10 +79,15 @@ void	ft_exit(t_global *global, pthread_t **thread_array)
  */
 int	ft_is_alive(t_global *global, t_philo_list *philo)
 {
+	int	rt;
+	pthread_mutex_lock(global->mutex_total_meals);
 	if (ft_timestamp(global->start_time) - philo->time_of_last_meal_in_ms
 		< global->time_to_die)
-		return (1);
-	return (0);
+		rt = 1;
+	else
+		rt = 0;
+	pthread_mutex_unlock(global->mutex_total_meals);
+	return (rt);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:05:18 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 17:00:12 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 11:32:10 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,10 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 
 	global = ft_init_global(start_time, argv);
 	global->philo = ft_lstinit(global);
-	global->mutex_message = (pthread_mutex_t *)ft_calloc(1,
-			sizeof(pthread_mutex_t));
-	global->mutex_total_meals = (pthread_mutex_t *)ft_calloc(1,
-			sizeof(pthread_mutex_t));
-	global->mutex_end = (pthread_mutex_t *)ft_calloc(1,
-			sizeof(pthread_mutex_t));
-	pthread_mutex_init(global->mutex_message, NULL);
-	pthread_mutex_init(global->mutex_total_meals, NULL);
-	pthread_mutex_init(global->mutex_end, NULL);
+	global->mutex_message = ft_new_mutex();
+	global->mutex_total_meals = ft_new_mutex();
+	global->mutex_end = ft_new_mutex();
+	global->mutex_create_threads = ft_new_mutex();
 	thread_array = ft_init_thread_array(global->nb_philo);
 	ft_create_threads(global, thread_array);
 	while (1)
@@ -78,5 +73,6 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 			pthread_mutex_unlock(global->mutex_end);
 			break ;
 		}
+	ft_wait_for_threads_to_be_done(thread_array);
 	ft_exit(global, thread_array);
 }
