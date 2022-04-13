@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 14:31:50 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:02:38 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void					ft_think(t_global *global, t_philo_list *philo);
 void					ft_philo_eats_or_thinks(t_global *global);
 int						ft_have_all_philo_eaten_enough(t_global *global);
 /*	message.c	*/
-void					ft_display_message(pthread_mutex_t *mutex_message,
+void					ft_display_message(t_global *global,
 							int timpestamp,
 							int philo_id, int message);
 /*  main.c	*/

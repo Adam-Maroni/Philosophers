@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 11:01:02 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/12 09:46:02 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:42:12 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 	int timpestamp, int philo_id, int message)
  * \brief This function will decice which message we would display.
 */
-void	ft_display_message(pthread_mutex_t *mutex_message,
+void	ft_display_message(t_global *global,
 			int timpestamp, int philo_id, int message)
 {
-	if (!mutex_message)
+	int	end;
+
+	pthread_mutex_lock(global->mutex_end);
+	end = global->end;
+	pthread_mutex_unlock(global->mutex_end);
+	if (end && message != 3)
 		return ;
-	pthread_mutex_lock(mutex_message);
+	pthread_mutex_lock(global->mutex_message);
 	printf("%d %d ", timpestamp, philo_id);
 	if (message == 0)
 		printf("is eating\n");
@@ -34,6 +39,6 @@ void	ft_display_message(pthread_mutex_t *mutex_message,
 		printf("died\n");
 	else if (message == 4)
 		printf("has taken a fork\n");
-	if (pthread_mutex_unlock(mutex_message))
+	if (pthread_mutex_unlock(global->mutex_message))
 		printf("Couldn't unlock mutex message, thread: %d\n", philo_id);
 }

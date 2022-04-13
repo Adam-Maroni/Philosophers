@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:31:41 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 14:27:54 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:43:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_destroy_thread_array(pthread_t **thread_array)
 		return ;
 	while (thread_array[i])
 	{
-		pthread_detach(*thread_array[i]);
 		free(thread_array[i]);
 		i++;
 	}

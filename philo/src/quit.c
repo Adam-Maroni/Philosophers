@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 14:31:14 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:04:03 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_is_too_late(t_global *global)
 	}
 	if (ft_is_alive(global, philo_next))
 		return (0);
-	ft_display_message(global->mutex_message,
+	ft_display_message(global,
 		ft_timestamp(global->start_time), philo_next->id, 3);
 	return (1);
 }

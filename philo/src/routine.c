@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 09:19:07 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 11:50:36 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:59:32 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	*ft_routine(void *global)
 		ft_clean_forks(philo->fork, philo->next->fork);
 		ft_sleep(cast, philo);
 		ft_think(cast, philo);
+		usleep(0.1);
 	}
 	return (NULL);
 }

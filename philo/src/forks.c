@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:19:29 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 14:20:21 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/13 17:38:10 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	ft_take_forks_left_right(t_global *global,
 		return (-1);
 	if (pthread_mutex_lock(left_fork) == 0)
 	{	
-		ft_display_message(global->mutex_message,
+		ft_display_message(global,
 			ft_timestamp(global->start_time),
 			philo->id, 4);
 		if (pthread_mutex_lock(right_fork) == 0)
 		{
-			ft_display_message(global->mutex_message,
+			ft_display_message(global,
 				ft_timestamp(global->start_time), philo->id, 4);
 			return (1);
 		}
@@ -42,12 +42,12 @@ int	ft_take_forks_right_left(t_global *global,
 		return (-1);
 	if (pthread_mutex_lock(right_fork) == 0)
 	{	
-		ft_display_message(global->mutex_message,
+		ft_display_message(global,
 			ft_timestamp(global->start_time),
 			philo->id, 4);
 		if (pthread_mutex_lock(left_fork) == 0)
 		{
-			ft_display_message(global->mutex_message,
+			ft_display_message(global,
 				ft_timestamp(global->start_time), philo->id, 4);
 			return (1);
 		}
