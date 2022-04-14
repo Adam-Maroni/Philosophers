@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:05:18 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/13 17:33:29 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/14 13:11:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 	thread_array = ft_init_thread_array(global->nb_philo);
 	ft_create_threads(global, thread_array);
 	while (1)
+	{
 		if (ft_have_all_philo_eaten_enough(global) || ft_is_too_late(global))
 		{
 			pthread_mutex_lock(global->mutex_end);
@@ -73,6 +74,7 @@ void	ft_philosopher_handler(t_timeval *start_time, char **argv)
 			pthread_mutex_unlock(global->mutex_end);
 			break ;
 		}
+	}
 	ft_wait_for_threads_to_be_done(thread_array);
 	ft_exit(global, thread_array);
 }
