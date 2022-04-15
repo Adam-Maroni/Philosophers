@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 13:58:38 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/15 12:46:42 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 20:54:46 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ void	ft_eat(t_global *global, t_philo_list *philo)
 		return ;
 	ft_display_message(global->mutex_message,
 		ft_timestamp(global->start_time), philo->id, 0);
-	philo->time_of_last_meal_in_ms = ft_timestamp(global->start_time);
 	philo->eat_counter++;
+	pthread_mutex_lock(global->mutex_message);
+	philo->time_of_last_meal_in_ms = ft_timestamp(global->start_time);
 	global->total_meals++;
+	pthread_mutex_unlock(global->mutex_message);
 	usleep(global->time_to_eat * 1000);
 }
 

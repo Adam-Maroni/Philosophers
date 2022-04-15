@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:31:41 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 17:09:52 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 20:28:47 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	ft_create_threads(t_global *global, pthread_t **thread_array)
 	i = 0;
 	while (i < global->nb_philo)
 	{
-		if (pthread_create(thread_array[i], NULL,
-				ft_routine, (void *)global) != 0)
-			printf("Something went wrong with thread %d\n", (current_philo)->id);
+		pthread_create(thread_array[i], NULL, ft_routine, (void *)global);
 		usleep(1);
+		pthread_mutex_lock(global->mutex_message);
 		current_philo = current_philo->next;
 		*global->philo = current_philo;
+		pthread_mutex_unlock(global->mutex_message);
 		i++;
 	}
 }

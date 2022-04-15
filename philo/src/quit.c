@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/15 12:01:50 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 20:55:07 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,20 @@
  */
 int	ft_have_all_philo_eaten_enough(t_global *global)
 {
+	int	rt;
+
 	if (!global
 		|| !global->number_of_times_each_philosopher_must_eat
 		|| !global->nb_philo)
 		return (0);
+	pthread_mutex_lock(global->mutex_message);
 	if (global->total_meals >= global->nb_philo
 		* global->number_of_times_each_philosopher_must_eat)
-		return (1);
-	return (0);
+		rt = 1;
+	else
+		rt = 0;
+	pthread_mutex_unlock(global->mutex_message);
+	return (rt);
 }
 
 /**
@@ -72,10 +78,16 @@ void	ft_exit(t_global *global, pthread_t **thread_array)
  */
 int	ft_is_alive(t_global *global, t_philo_list *philo)
 {
+	int	rt;
+
+	pthread_mutex_lock(global->mutex_message);
 	if (ft_timestamp(global->start_time) - philo->time_of_last_meal_in_ms
-		< global->time_to_die)
-		return (1);
-	return (0);
+			< global->time_to_die)
+		rt = 1;
+	else
+		rt = 0;
+	pthread_mutex_unlock(global->mutex_message);
+	return (rt);
 }
 
 /**

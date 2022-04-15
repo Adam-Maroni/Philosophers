@@ -61,7 +61,7 @@ mem_check: re
 	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
 
 valgrind: re
-	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+	valgrind --log-file=valgrind.log -q --tool=helgrind ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)
