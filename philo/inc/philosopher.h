@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 11:26:24 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 15:49:38 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 12:19:08 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,19 @@ int						ft_have_all_philo_eaten_enough(t_global *global);
 void					ft_exit(t_global *global, pthread_t **thread_array);
 
 /*	thread_array.c	*/
-pthread_t	**ft_init_thread_array(int nb);
-void	ft_create_threads(t_global *global, pthread_t **thread_array);
-void	ft_destroy_thread_array(pthread_t **thread_array);
+pthread_t				**ft_init_thread_array(int nb);
+void					ft_create_threads(t_global *global,
+							pthread_t **thread_array);
+void					ft_destroy_thread_array(pthread_t **thread_array);
+
+/*	fork.c	*/
+void					ft_take_forks_left_then_right(t_global *global,
+							pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork,
+							t_philo_list *philo);
+void					ft_take_forks_right_then_left(t_global *global,
+							pthread_mutex_t *left_fork,
+							pthread_mutex_t *right_fork,
+							t_philo_list *philo);
 
 #endif

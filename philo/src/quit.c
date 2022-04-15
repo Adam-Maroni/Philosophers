@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 17:57:31 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 12:01:50 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ void	ft_exit(t_global *global, pthread_t **thread_array)
 	pthread_mutex_lock(global->mutex_message);
 	if (thread_array)
 		ft_destroy_thread_array(thread_array);
-	ft_lstclear(global->philo);
-	free(global->philo);
 	pthread_mutex_unlock(global->mutex_message);
 	pthread_mutex_destroy(global->mutex_message);
 	free(global->mutex_message);
+	global->mutex_message = NULL;
+	ft_lstclear(global->philo);
+	free(global->philo);
 	free(global);
+	global = NULL;
 	exit(0);
 }
 

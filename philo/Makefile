@@ -18,6 +18,7 @@ SRC = $(addprefix $(SRC_PATH)/, \
 	src/subroutines.c \
 	src/routine.c \
 	src/threads.c \
+	src/forks.c \
 	src/timestamp.c \
 )
 OBJ_PATH = obj
@@ -47,8 +48,8 @@ COVERAGE_PATH = ./tests/coverage
 COVERAGE_OUTPUT = $(COVERAGE_PATH)/coverage.html
 ARGS = $(NB_PHILOSOPHER) $(TIME_TO_DIE) $(TIME_TO_EAT) $(TIME_TO_SLEEP) $(NB_OF_TIME_EACH_PHILO_MUST_EAT)
 
-NB_PHILOSOPHER = "10"
-TIME_TO_DIE = "10000" 
+NB_PHILOSOPHER = "2"
+TIME_TO_DIE = "500" 
 TIME_TO_EAT = "200"
 TIME_TO_SLEEP = "200"
 NB_OF_TIME_EACH_PHILO_MUST_EAT = "2"
@@ -58,7 +59,9 @@ debug: $(NAME)
 
 mem_check: re
 	$(CC) -fsanitize=thread -D TSAN_OPTIONS=second_deadlock_stack=1 -g $(addprefix -I, $(INC))  $(LIBRARIES) $(OBJ)  -o $(NAME) && ./$(NAME) $(ARGS)
-#	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
+
+valgrind: re
+	valgrind -q --tool=helgrind ./$(NAME) $(ARGS)
 
 simple_test: $(NAME)
 	-./$(NAME) $(ARGS)
