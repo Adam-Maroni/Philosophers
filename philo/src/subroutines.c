@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 13:58:38 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/15 12:10:54 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/15 12:46:42 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ int	ft_take_forks(t_global *global,
 {
 	if (!global || !left_fork || !right_fork || left_fork == right_fork)
 		return (-1);
-	if (philo->id % 2 == 0)
-		ft_take_forks_left_then_right(global, left_fork, right_fork, philo);
-	else
-		ft_take_forks_right_then_left(global, left_fork, right_fork, philo);
+	ft_take_forks_left_then_right(global, left_fork, right_fork, philo);
 	return (1);
 }
 
