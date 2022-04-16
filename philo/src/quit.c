@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 15:32:44 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/16 11:04:09 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/16 11:18:06 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_is_alive(t_global *global, t_philo_list *philo)
 
 	pthread_mutex_lock(global->mutex_message);
 	if (ft_timestamp(global->start_time) - philo->time_of_last_meal_in_ms
-			< global->time_to_die)
+		< global->time_to_die)
 		rt = 1;
 	else
 		rt = 0;
