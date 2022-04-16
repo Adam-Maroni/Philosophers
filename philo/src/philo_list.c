@@ -6,7 +6,7 @@
 /*   By: amaroni <amaroni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:54:30 by amaroni           #+#    #+#             */
-/*   Updated: 2022/04/10 11:41:41 by amaroni          ###   ########.fr       */
+/*   Updated: 2022/04/16 11:03:29 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_destroy_philo(t_philo_list *addr_philo)
 	(addr_philo)->next->previous = addr_philo->previous;
 	(addr_philo)->previous->next = addr_philo->next;
 	free(addr_philo);
+	addr_philo = NULL;
 }
 
 /** \fn *ft_lstlast (t_philo_list *first_element)
